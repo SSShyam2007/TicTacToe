@@ -5,7 +5,6 @@ public class TicTacToe {
 
     public static void main(String[] args) {
 
-        // create board
         char[][] board = new char[3][3];
 
         // initialize board
@@ -15,7 +14,6 @@ public class TicTacToe {
             }
         }
 
-        // print board
         System.out.println("Initial Board:");
         printBoard(board);
 
@@ -23,31 +21,21 @@ public class TicTacToe {
         Random random = new Random();
         int toss = random.nextInt(2);
 
-        String currentPlayer;
-        char player1Symbol;
-        char player2Symbol;
-
-        if (toss == 0) {
-            currentPlayer = "Player 1";
-            player1Symbol = 'X';
-            player2Symbol = 'O';
-        } else {
-            currentPlayer = "Player 2";
-            player1Symbol = 'O';
-            player2Symbol = 'X';
-        }
-
+        String currentPlayer = (toss == 0) ? "Player 1" : "Player 2";
         System.out.println("\n" + currentPlayer + " starts first");
 
-        // UC3 → take input
+        // UC3 input
         int slot = getUserInput();
 
-        System.out.println("You selected slot: " + slot);
+        // UC4 mapping
+        int row = getRow(slot);
+        int col = getCol(slot);
+
+        System.out.println("Row: " + row + ", Column: " + col);
     }
 
-    // method to print board
+    // print board
     public static void printBoard(char[][] board) {
-
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 System.out.print(board[i][j] + " ");
@@ -56,15 +44,20 @@ public class TicTacToe {
         }
     }
 
-    // UC3 method → user input
+    // user input
     public static int getUserInput() {
-
         Scanner input = new Scanner(System.in);
+        System.out.print("\nEnter slot (1-9): ");
+        return input.nextInt();
+    }
 
-        System.out.print("\nEnter slot number (1-9): ");
+    // convert slot → row
+    public static int getRow(int slot) {
+        return (slot - 1) / 3;
+    }
 
-        int slot = input.nextInt();
-
-        return slot;
+    // convert slot → column
+    public static int getCol(int slot) {
+        return (slot - 1) % 3;
     }
 }
