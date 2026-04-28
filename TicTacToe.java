@@ -17,13 +17,36 @@ public class TicTacToe {
         System.out.println("Initial Board:");
         printBoard(board);
 
+ dev
         // USER MOVE
+
+        // toss
+        Random random = new Random();
+        int toss = random.nextInt(2);
+
+        char currentSymbol = (toss == 0) ? 'X' : 'O';
+        System.out.println("\nGame starts with symbol: " + currentSymbol);
+
+        // input
+ feature/UC1-display-board
         int slot = getUserInput();
         int row = getRow(slot);
         int col = getCol(slot);
 
+ dev
         if (isValidMove(board, row, col)) {
             placeMove(board, row, col, 'X');
+
+        // validation
+        if (isValidMove(board, row, col)) {
+
+            // UC6: place symbol
+            placeMove(board, row, col, currentSymbol);
+
+            System.out.println("\nUpdated Board:");
+            printBoard(board);
+
+          feature/UC1-display-board
         } else {
             System.out.println("Invalid move");
             return;
@@ -66,7 +89,11 @@ public class TicTacToe {
         return (slot - 1) % 3;
     }
 
+ dev
     // validate move
+
+    // validation
+ feature/UC1-display-board
     public static boolean isValidMove(char[][] board, int row, int col) {
 
         if (row < 0 || row > 2 || col < 0 || col > 2) {
@@ -80,6 +107,7 @@ public class TicTacToe {
         return true;
     }
 
+dev
     // place symbol
     public static void placeMove(char[][] board, int row, int col, char symbol) {
         board[row][col] = symbol;
@@ -105,4 +133,10 @@ public class TicTacToe {
             }
         }
     }
+
+    // UC6: place symbol
+    public static void placeMove(char[][] board, int row, int col, char symbol) {
+        board[row][col] = symbol;
+    }
+ feature/UC1-display-board
 }
