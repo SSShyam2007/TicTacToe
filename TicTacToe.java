@@ -20,18 +20,25 @@ public class TicTacToe {
         // toss
         Random random = new Random();
         int toss = random.nextInt(2);
-        String currentPlayer = (toss == 0) ? "Player 1" : "Player 2";
-        System.out.println("\n" + currentPlayer + " starts first");
 
-        // take input
+        char currentSymbol = (toss == 0) ? 'X' : 'O';
+        System.out.println("\nGame starts with symbol: " + currentSymbol);
+
+        // input
         int slot = getUserInput();
 
         int row = getRow(slot);
         int col = getCol(slot);
 
-        // UC5 validation
+        // validation
         if (isValidMove(board, row, col)) {
-            System.out.println("Valid move. You can place your symbol.");
+
+            // UC6: place symbol
+            placeMove(board, row, col, currentSymbol);
+
+            System.out.println("\nUpdated Board:");
+            printBoard(board);
+
         } else {
             System.out.println("Invalid move. Try again.");
         }
@@ -63,19 +70,22 @@ public class TicTacToe {
         return (slot - 1) % 3;
     }
 
-    // UC5 validation method
+    // validation
     public static boolean isValidMove(char[][] board, int row, int col) {
 
-        // boundary check
         if (row < 0 || row > 2 || col < 0 || col > 2) {
             return false;
         }
 
-        // empty cell check
         if (board[row][col] != '-') {
             return false;
         }
 
         return true;
+    }
+
+    // UC6: place symbol
+    public static void placeMove(char[][] board, int row, int col, char symbol) {
+        board[row][col] = symbol;
     }
 }
