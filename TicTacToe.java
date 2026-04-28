@@ -17,24 +17,23 @@ public class TicTacToe {
         System.out.println("Initial Board:");
         printBoard(board);
 
-        // toss
-        Random random = new Random();
-        int toss = random.nextInt(2);
-        String currentPlayer = (toss == 0) ? "Player 1" : "Player 2";
-        System.out.println("\n" + currentPlayer + " starts first");
-
-        // take input
+        // user move
         int slot = getUserInput();
-
         int row = getRow(slot);
         int col = getCol(slot);
 
-        // UC5 validation
         if (isValidMove(board, row, col)) {
-            System.out.println("Valid move. You can place your symbol.");
-        } else {
-            System.out.println("Invalid move. Try again.");
+            placeMove(board, row, col, 'X');
         }
+
+        System.out.println("\nAfter Player Move:");
+        printBoard(board);
+
+        // UC7 → computer move
+        computerMove(board);
+
+        System.out.println("\nAfter Computer Move:");
+        printBoard(board);
     }
 
     // print board
@@ -47,7 +46,7 @@ public class TicTacToe {
         }
     }
 
-    // input
+    // user input
     public static int getUserInput() {
         Scanner input = new Scanner(System.in);
         System.out.print("\nEnter slot (1-9): ");
@@ -63,19 +62,45 @@ public class TicTacToe {
         return (slot - 1) % 3;
     }
 
-    // UC5 validation method
+    // validation
     public static boolean isValidMove(char[][] board, int row, int col) {
 
-        // boundary check
         if (row < 0 || row > 2 || col < 0 || col > 2) {
             return false;
         }
 
-        // empty cell check
         if (board[row][col] != '-') {
             return false;
         }
 
         return true;
+    }
+
+    // place move
+    public static void placeMove(char[][] board, int row, int col, char symbol) {
+        board[row][col] = symbol;
+    }
+
+    // UC7: computer random move
+    public static void computerMove(char[][] board) {
+
+        Random random = new Random();
+        int slot;
+        int row, col;
+
+        // loop until valid move
+        while (true) {
+
+            slot = random.nextInt(9) + 1; // 1 to 9
+
+            row = getRow(slot);
+            col = getCol(slot);
+
+            if (isValidMove(board, row, col)) {
+                placeMove(board, row, col, 'O');
+                System.out.println("\nComputer chose slot: " + slot);
+                break;
+            }
+        }
     }
 }
