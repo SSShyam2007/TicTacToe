@@ -17,19 +17,22 @@ public class TicTacToe {
         System.out.println("Initial Board:");
         printBoard(board);
 
-        // user move
+        // USER MOVE
         int slot = getUserInput();
         int row = getRow(slot);
         int col = getCol(slot);
 
         if (isValidMove(board, row, col)) {
             placeMove(board, row, col, 'X');
+        } else {
+            System.out.println("Invalid move");
+            return;
         }
 
         System.out.println("\nAfter Player Move:");
         printBoard(board);
 
-        // UC7 → computer move
+        // COMPUTER MOVE (UC7)
         computerMove(board);
 
         System.out.println("\nAfter Computer Move:");
@@ -53,16 +56,17 @@ public class TicTacToe {
         return input.nextInt();
     }
 
-    // mapping
+    // slot → row
     public static int getRow(int slot) {
         return (slot - 1) / 3;
     }
 
+    // slot → column
     public static int getCol(int slot) {
         return (slot - 1) % 3;
     }
 
-    // validation
+    // validate move
     public static boolean isValidMove(char[][] board, int row, int col) {
 
         if (row < 0 || row > 2 || col < 0 || col > 2) {
@@ -76,7 +80,7 @@ public class TicTacToe {
         return true;
     }
 
-    // place move
+    // place symbol
     public static void placeMove(char[][] board, int row, int col, char symbol) {
         board[row][col] = symbol;
     }
@@ -85,13 +89,11 @@ public class TicTacToe {
     public static void computerMove(char[][] board) {
 
         Random random = new Random();
-        int slot;
-        int row, col;
+        int slot, row, col;
 
-        // loop until valid move
         while (true) {
 
-            slot = random.nextInt(9) + 1; // 1 to 9
+            slot = random.nextInt(9) + 1;
 
             row = getRow(slot);
             col = getCol(slot);
